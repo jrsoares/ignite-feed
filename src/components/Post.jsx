@@ -19,11 +19,17 @@ export function Post() {
 
       <div className={styles.content}>
         <p>Fala pessal </p>
-        <p>Acabei de fazer mais um projeto pro meu portifolio</p>
+        <p>
+          Acabei de fazer mais um projeto pro meu portifolio Lorem ipsum dolor
+          sit amet, consectetur adipisicing elit. Cum a quam qui, reprehenderit
+          maxime quibusdam minima, fugiat laborum illum, ab aut saepe! Adipisci
+          nulla, illo dignissimos voluptatibus culpa consequuntur fugit.
+        </p>
         <p>
           <a href="#">jr/blog</a>
         </p>
         <p>
+          {' '}
           <a href="">#novoprojeto #portifa</a>
         </p>
       </div>
