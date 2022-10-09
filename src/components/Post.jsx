@@ -1,37 +1,48 @@
 import styles from './Post.module.css';
-export function Post() {
+import { format, formatDistanceToNow } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
+export function Post({ author, content, publishedAt }) {
+  const publishedDateFormatted = format(
+    publishedAt,
+    "d 'de' LLLL 'às' HH:mm'h'",
+    {
+      locale: ptBR,
+    }
+  );
+  const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+    locale: ptBR,
+    addSuffix: true,
+  });
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <img
-            className={styles.avatar}
-            src="https://github.com/jrsoares.png"
-            alt=""
-          />
+          <img className={styles.avatar} src={author.avatarUrl} alt="" />
           <div className={styles.authorInfo}>
-            <strong>Júnior Soares</strong>
-            <span>Web developer</span>
+            <strong>{author.name}</strong>
+            <span>{author.role}</span>
           </div>
         </div>
-        <time title="03 de outubro às 16:48">Publicado há 1 hora</time>
+        <time
+          title="publishedDateFormatted"
+          dateTime={publishedAt.toISOString()}
+        >
+          {publishedDateRelativeToNow}
+        </time>
       </header>
 
       <div className={styles.content}>
-        <p>Fala pessal </p>
-        <p>
-          Acabei de fazer mais um projeto pro meu portifolio Lorem ipsum dolor
-          sit amet, consectetur adipisicing elit. Cum a quam qui, reprehenderit
-          maxime quibusdam minima, fugiat laborum illum, ab aut saepe! Adipisci
-          nulla, illo dignissimos voluptatibus culpa consequuntur fugit.
-        </p>
-        <p>
-          <a href="#">jr/blog</a>
-        </p>
-        <p>
-          {' '}
-          <a href="">#novoprojeto #portifa</a>
-        </p>
+        {content.map((line) => {
+          if (line.type === 'paragraph') {
+            return <p>{line.content}</p>;
+          } else if (line.type === 'link') {
+            return (
+              <p>
+                <a href="#">{line.content}</a>
+              </p>
+            );
+          }
+        })}
       </div>
     </article>
   );
