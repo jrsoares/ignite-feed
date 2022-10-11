@@ -1,6 +1,8 @@
 import styles from './Post.module.css';
 import { format, formatDistanceToNow } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
+import { Comment } from './Comment';
+
 export function Post({ author, content, publishedAt }) {
   const publishedDateFormatted = format(
     publishedAt,
@@ -44,6 +46,16 @@ export function Post({ author, content, publishedAt }) {
           }
         })}
       </div>
+
+      <form className={styles.commentForm}>
+        <strong>Deixe seu feedback</strong>
+
+        <textarea placeholder="Deixe um comentário" />
+
+        <footer>
+          <button type="submit">Publicar</button>
+        </footer>
+      </form>
     </article>
   );
 }
