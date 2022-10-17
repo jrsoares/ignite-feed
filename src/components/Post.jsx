@@ -5,7 +5,8 @@ import ptBR from 'date-fns/locale/pt-BR';
 import { Comment } from './Comment';
 
 export function Post({ author, content, publishedAt }) {
-  const [comments, setComments] = useState([1, 2]);
+  const [comments, setComments] = useState(['Post muito bacana !']);
+  const [newCommentText, setNewCommentText] = useState('');
 
   const publishedDateFormatted = format(
     publishedAt,
@@ -22,9 +23,14 @@ export function Post({ author, content, publishedAt }) {
 
   const handleSubmitPublished = () => {
     event.preventDefault();
-    setComments([...comments, comments.length + 1]);
-    console.log(comments);
+    setComments([...comments, newCommentText]);
+    setNewCommentText('');
   };
+
+  const handleNewCommentChange = (event) => {
+    setNewCommentText(event.target.value);
+  };
+
   return (
     <article className={styles.post}>
       <header>
@@ -60,7 +66,11 @@ export function Post({ author, content, publishedAt }) {
       <form className={styles.commentForm}>
         <strong>Deixe seu feedback</strong>
 
-        <textarea placeholder="Deixe um comentário" />
+        <textarea
+          placeholder="Deixe um comentário"
+          onChange={handleNewCommentChange}
+          value={newCommentText}
+        />
 
         <footer>
           <button type="submit" onClick={handleSubmitPublished}>
@@ -69,7 +79,7 @@ export function Post({ author, content, publishedAt }) {
         </footer>
       </form>
       {comments.map((comment) => {
-        return <Comment />;
+        return <Comment content={comment} />;
       })}
     </article>
   );
